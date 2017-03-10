@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>jekyll，遇到的坑</title>
+    <title>JavaScript中的Repaint和Reflow基本认识和优化</title>
     
     
     <meta name="author" content="Zhaoce Bai">
@@ -82,8 +82,6 @@
   
     
       
-    
-  
     
   
     
@@ -194,6 +192,14 @@
       
     
   
+    
+      
+        
+        
+      	
+      
+    
+  
 
 
 
@@ -226,22 +232,29 @@ var duoshuoQuery = {short_name:"bamzc"};
 <!-- 多说公共JS代码 end -->
 <div class="page-header">
   <h1>
-     <small>jekyll，遇到的坑</small>
+     <small>JavaScript中的Repaint和Reflow基本认识和优化</small>
     
   </h1>
 </div>
 <div class="content-center">
     <div class="row">
         <div class="col-md-12 post-container post-container-category">
-            <h3>for</h3>
-<p>for循环，计数！</p>
-<p>https://help.shopify.com/themes/liquid/objects/for-loops</p>
+            <h3>1. 什么是Repaint/Reflow?</h3>
+<p>先来一张图：浏览器解析大概的工作流程</p>
+<pre><img src="/assets/src/img/repaint_reflow.png" alt="浏览器解析大概的工作流程" /></pre>
+<p>这张图应该可以很好理解，归纳为四个步骤：</p>
+<ul>
+<li>1、解析HTML以构建DOM树：渲染引擎开始解析HTML文档，转换树中的html标签或js生成的标签到DOM节点，它被称为 -- 内容树。</li>
+<li>2、构建渲染树：解析CSS（包括外部CSS文件和样式元素以及js生成的样式），根据CSS选择器计算出节点的样式，创建另一个树 —- 渲染树。</li>
+<li>3、布局渲染树:从根节点递归调用，计算每一个元素的大小、位置等，给每个节点所应该出现在屏幕上的精确坐标。</li>
+<li>4、绘制渲染树: 遍历渲染树，每个节点将使用UI后端层来绘制。</li>
+</ul>
 
         </div>
         <div class="duoshuo">
             <!-- 多说评论框 start -->
             <a href='#' id="comments"></a>
-            <div class="ds-thread" id="ds-thread" data-limit='100' data-thread-key="/2016/11/15/jekyll-pit" data-url="/2016/11/15/jekyll-pit.html"></div>
+            <div class="ds-thread" id="ds-thread" data-limit='100' data-thread-key="/2016/11/13/repaint-reflow" data-url="/2016/11/13/repaint-reflow.html"></div>
             <!-- 多说评论框 end -->
         </div>
     </div>
@@ -252,7 +265,7 @@ var duoshuoQuery = {short_name:"bamzc"};
     </div>
         <div class="footer">
             <div class="footer-container">
-                <p>&copy; 2016 Zhaoce Bai
+                <p>&copy; 2017 Zhaoce Bai
                 </p>
             </div>
         </div>

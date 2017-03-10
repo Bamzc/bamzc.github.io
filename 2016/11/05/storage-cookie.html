@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>阅读列表</title>
+    <title>对Storage和cookie的封装</title>
     
     
     <meta name="author" content="Zhaoce Bai">
@@ -15,6 +15,10 @@
     <link href="/assets/src/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
     <!-- single page styles -->
+    
+        
+            <link href="/assets/css/study_relevant.css" rel="stylesheet" type="text/css">
+        
     
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -213,74 +217,180 @@
     <div class="container">
         
 
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"bamzc"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+</script>
+<!-- 多说公共JS代码 end -->
 <div class="page-header">
   <h1>
-  	 <small>分类列表：阅读列表</small>
-  	 <p>天才，就其本质而说，只不过是一种对事业、对工作过盛的热爱而已。</p>
+     <small>对Storage和cookie的封装</small>
+    
   </h1>
 </div>
 <div class="content-center">
+    <div class="row">
+        <div class="col-md-12 post-container post-container-category">
+            <pre>
+<textarea class="cm_textarea">
+&lt;!doctype html&gt;
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>test</title>
+</head>
+<body>
+	<script type="text/javascript">
+	var singleton = function( fn ){
+	    var result;
+	    return function(){
+	        return result || ( result = fn .apply( this, arguments ) );
+	    }
+	}
+	var _storage=singleton(function(){
+		var lstorage;
+		if(window.localStorage){
+			lstorage=localStorage;
+		}else{
+		    var UserData = {
+		    userData: null,
+		    name: location.hostname,
+
+		    init: function() {
+		        if(!UserData.userData) {
+		            try {
+		                UserData.userData = document.createElement('div');
+		                UserData.userData.type = "hidden";
+		                UserData.userData.style.display = "none";
+		                UserData.userData.addBehavior("#default#userData");
+		                document.body.appendChild(UserData.userData);
+		                var expires = new Date();
+		                expires.setDate(expires.getDate() + 365);
+		                UserData.userData.expires = expires.toUTCString();
+		            } catch(e) {
+		                return false;
+		            }
+		        }
+		        return true;
+		    },
+
+		    setItem: function(key, value) {
+		        if(UserData.init()) {
+		            UserData.userData.setAttribute(key,value);
+		        }
+		    },
+
+		    getItem: function(key) {
+		        if(UserData.init()) {
+		            var  v=UserData.userData.getAttribute(key);
+		            return v;
+		        }
+		    },
+		    removeItem: function(key) {
+		        if(UserData.init()) {
+		            UserData.userData.removeAttribute(key);
+		        }
+		    },
+		    //以下三个方法暂时留着,区别Attribute和property
+		    getAttr:function(el, prop){
+		    	return el[prop] || el.getAttribute(prop);
+		    },
+		    setAttr:function(el, prop, val){
+	    		el[prop] = val;
+		    },
+		    removeAttr:function(el, prop){
+		    	delete el[prop];
+		    }
+		};
+			lstorage=UserData;
+		};
+		var ls = {
+			setLocalStorage : function(k,v){
+				lstorage.setItem(k,v);
+			},
+			getLocalStorage : function(k){
+				return lstorage.getItem(k);
+			},
+			removeLocalStorage:function(k){
+				lstorage.removeItem(k);
+			},
+			clearLocalStorage : function(){
+				lstorage.clear();
+			}
+		};
+		return ls;
+	})();
+
+	var _cookie=singleton(function(){
+		var ck={
+			addCookie:function(obj){
+				if(typeof(obj)==="undefined"){
+					return;
+				}
+				for(var c in obj){
+					var strCookie=c+"="+obj[c]+";"
+					// cookieString+=strCookie;
+					document.cookie=strCookie;
+				}
+				// alert(document.cookie)
+			},
+			getCookie : function(name){
+				var strCookie=document.cookie; 
+				var arrCookie=strCookie.split("; "); 
+				for(var i=0;i<arrCookie.length;i++){ 
+					var arr=arrCookie[i].split("="); 
+					if(arr[0]==name){
+						return arr[1];
+					}; 
+				} 
+				return ""; 
+
+			},
+			deleteCookie : function(name){
+				var date=new Date(); 
+				date.setTime(date.getTime()-10000); 
+				document.cookie=name+"=v; expires="+date.toGMTString();
+			}
+		};
+		return ck;
+	})();
+	//需要存储的数据
+	var storageJson={
+		"name":"bamzc",
+		"age":"23",
+		"sex":"男"
+	};
+	_storage.setLocalStorage("name",storageJson.name);
+	// _storage.removeLocalStorage("name");
+	document.write("我给localStorage赋值："+_storage.getLocalStorage("name"));
+    _cookie.addCookie(storageJson);
+    // _cookie.deleteCookie("age");
+    document.write("<br><br>我添加了一个cookie："+_cookie.getCookie("age"));
+	</script>
+</body>
+</html>
+</textarea>
+</pre>
+
+        </div>
+        <div class="duoshuo">
+            <!-- 多说评论框 start -->
+            <a href='#' id="comments"></a>
+            <div class="ds-thread" id="ds-thread" data-limit='100' data-thread-key="/2016/11/05/storage-cookie" data-url="/2016/11/05/storage-cookie.html"></div>
+            <!-- 多说评论框 end -->
+        </div>
+    </div>
+</div>
 
 
-<!--列表包装容器-->
-<div class="read-wrapper clearfix">
-	<div class="read-list">
-		<div class="ribbon-wrapper">
-            <div class="pic-ribbon ribbon-red">人气</div>
-        </div>
-        <h2 class="read-list-title">三体</h2>
-        <div class="read-list-pic"><img src="/assets/src/img/santi.jpg"></div>
-        <ul class="read-list-feature">
-        	<li>长篇科幻小说</li>
-        	<li><strong>作者：刘慈欣</strong></li>
-        </ul>
-        <!--<a href="#" class="btn">点击了解详情</a>-->
-	</div>
-	<div class="read-list">
-		<div class="ribbon-wrapper">
-            <div class="pic-ribbon ribbon-green">推荐</div>
-        </div>
-        <h2 class="read-list-title">JavaScript高级程序设计</h2>
-        <div class="read-list-pic"><img src="/assets/src/img/jsgj.jpg"></div>
-        <ul class="read-list-feature">
-        	<li>2006年人民邮电出版社出版的图书</li>
-        	<li><strong>作者：扎卡斯</strong></li>
-        </ul>
-	</div>
-	<div class="read-list">
-		<div class="ribbon-wrapper">
-            <div class="pic-ribbon ribbon-blue">划时代</div>
-        </div>
-        <h2 class="read-list-title">ES 6标准入门</h2>
-        <div class="read-list-pic"><img src="/assets/src/img/cover-2nd.jpg"></div>
-        <ul class="read-list-feature">
-        	<li>全面介绍ES 6新引入的语法特性</li>
-        	<li><strong>作者：阮一峰</strong></li>
-        </ul>
-	</div>
-	<div class="read-list">
-		<div class="ribbon-wrapper">
-            <div class="pic-ribbon ribbon-orange">经典</div>
-        </div>
-        <h2 class="read-list-title">Java编程思想</h2>
-        <div class="read-list-pic"><img src="/assets/src/img/java.jpg"></div>
-        <ul class="read-list-feature">
-        	<li>2007年由机械工业出版社出版的图书</li>
-        	<li><strong>作者：埃克尔</strong></li>
-        </ul>
-	</div>
-	<div class="read-list">
-		<div class="ribbon-wrapper">
-            <div class="pic-ribbon ribbon-orange">经典</div>
-        </div>
-        <h2 class="read-list-title">Java编程思想</h2>
-        <div class="read-list-pic"><img src="/assets/src/img/java.jpg"></div>
-        <ul class="read-list-feature">
-        	<li>2007年由机械工业出版社出版的图书</li>
-        	<li><strong>作者：埃克尔</strong></li>
-        </ul>
-	</div>
-</div></div>
 
     </div>
         <div class="footer">
