@@ -1,7 +1,7 @@
 webpackJsonp([2],{
 
 /***/ 0:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -13,10 +13,10 @@ webpackJsonp([2],{
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/***/ },
+/***/ }),
 
 /***/ 76:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 	
@@ -77,10 +77,10 @@ webpackJsonp([2],{
 	exports.default = cm;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
-/***/ },
+/***/ }),
 
 /***/ 77:
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	"use strict";
 	
@@ -92,10 +92,10 @@ webpackJsonp([2],{
 	  }
 	};
 
-/***/ },
+/***/ }),
 
 /***/ 78:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
@@ -125,17 +125,17 @@ webpackJsonp([2],{
 	  };
 	}();
 
-/***/ },
+/***/ }),
 
 /***/ 79:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	module.exports = { "default": __webpack_require__(80), __esModule: true };
 
-/***/ },
+/***/ }),
 
 /***/ 80:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(81);
 	var $Object = __webpack_require__(9).Object;
@@ -143,16 +143,16 @@ webpackJsonp([2],{
 	  return $Object.defineProperty(it, key, desc);
 	};
 
-/***/ },
+/***/ }),
 
 /***/ 81:
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	var $export = __webpack_require__(7);
 	// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
 	$export($export.S + $export.F * !__webpack_require__(17), 'Object', {defineProperty: __webpack_require__(13).f});
 
-/***/ }
+/***/ })
 
 });
 //# sourceMappingURL=life_relevant.js.map
