@@ -42,20 +42,21 @@ webpackJsonp([2],{
 		(0, _createClass3.default)(Comments, [{
 			key: 'ajaxHandlerComments',
 			value: function ajaxHandlerComments(cb, key) {
-				$.ajax({
-					url: 'https://api.duoshuo.com/threads/counts.jsonp',
-					type: 'get',
-					data: {
-						short_name: 'bamzc',
-						threads: key
-					},
-					dataType: 'jsonp',
-					success: function success(res) {
-						if (res.code == 0) {
-							cb(res.response[key]);
-						}
-					}
-				});
+				/*$.ajax({
+	   url:'https://api.duoshuo.com/threads/counts.jsonp',
+	   type:'get',
+	   data:{
+	   short_name : 'bamzc',
+	   threads : key
+	   },
+	   dataType:'jsonp',
+	   success:function (res) {
+	   if(res.code == 0){
+	   cb(res.response[key]);
+	   }
+	   
+	   }
+	   });*/
 			}
 		}]);
 		return Comments;
@@ -65,14 +66,14 @@ webpackJsonp([2],{
 	
 	var comments = $('.comments-link');
 	
-	if (comments.length > 0) {
-		comments.each(function (k, v) {
-			var comments_a = $(v).find('a');
-			cm.ajaxHandlerComments(function (res) {
+	/*if(comments.length > 0){
+		comments.each((k,v) => {
+			let comments_a = $(v).find('a');
+			cm.ajaxHandlerComments(function(res){
 				comments_a.find('i').html(res.comments);
-			}, comments_a.data('thread-key'));
+			},comments_a.data('thread-key'));
 		});
-	}
+	}*/
 	
 	exports.default = cm;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
