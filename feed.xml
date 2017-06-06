@@ -1,4 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="http://localhost:4000//feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000//feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000//" rel="alternate" type="text/html" /><updated>2017-06-05T14:52:08+08:00</updated><id>http://localhost:4000///</id><title type="html">白召策的博客</title><author><name>Zhaoce Bai</name><email>bamzc@hotmail.com</email></author><entry><title type="html">gulp静态资源版本控制</title><link href="http://localhost:4000//2017/02/19/gulp-rev.html" rel="alternate" type="text/html" title="gulp静态资源版本控制" /><published>2017-02-19T04:20:21+08:00</published><updated>2017-02-19T04:20:21+08:00</updated><id>http://localhost:4000//2017/02/19/gulp-rev</id><content type="html" xml:base="http://localhost:4000//2017/02/19/gulp-rev.html">&lt;h4&gt;Gulp-用自动化构建工具增强你的工作流程&lt;/h4&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="http://localhost:4000//feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000//feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000//" rel="alternate" type="text/html" /><updated>2017-06-06T15:28:17+08:00</updated><id>http://localhost:4000///</id><title type="html">白召策的博客</title><author><name>Zhaoce Bai</name><email>bamzc@hotmail.com</email></author><entry><title type="html">webpack+babel+es6整合</title><link href="http://localhost:4000//2017/06/06/webpack-babel-es6.html" rel="alternate" type="text/html" title="webpack+babel+es6整合" /><published>2017-06-06T02:20:21+08:00</published><updated>2017-06-06T02:20:21+08:00</updated><id>http://localhost:4000//2017/06/06/webpack-babel-es6</id><content type="html" xml:base="http://localhost:4000//2017/06/06/webpack-babel-es6.html">&lt;h3&gt;前言&lt;/h3&gt;
+&lt;p&gt;一直以来，我对ES6都有很大的兴趣。随着ES6越来越火，webpack+babel，就跟es6深深的黏在了一起。通过初入es6，查阅教程、案例。也被es6的语法糖，甜的根本停不下来。然而每次配置，总得查阅文档（记性太差）。于是乎，记录一下在此。&lt;/p&gt;
+&lt;p&gt;本文只介绍如何利用webpack整合Babel来编译ES6的语法，而实际上若要使用ES6的其它属性甚至是ES7（ES2016），其实只需要引入Babel其它的preset/plugin即可，在用法上并无多大变化。&lt;/p&gt;
+
+&lt;h3&gt;首先，来看一下需要的依赖(npm包)&lt;/h3&gt;
+
+&lt;p&gt;十分关键的一个依赖，就是&lt;code&gt;babel-loader&lt;/code&gt;，我们需要配置好babel-loader来加载那些使用了ES6语法的js文件。&lt;/p&gt;
+&lt;p&gt;babel相关的npm包：&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;1.&lt;code&gt;babel-core&lt;/code&gt;babel的核心库&lt;/li&gt;
+	&lt;li&gt;2.&lt;code&gt;babel-preset-es2015&lt;/code&gt;babel的preset（相当于plugin）。&lt;/li&gt;
+	&lt;li&gt;3.&lt;code&gt;babel-plugin-transform-runtime&lt;/code&gt;优化项&lt;/li&gt;
+	&lt;li&gt;4.&lt;code&gt;babel-runtime&lt;/code&gt;优化项&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;配置babel-loader&lt;/h3&gt;
+&lt;pre&gt;
+	&lt;textarea class=&quot;cm_textarea_script&quot;&gt;
+	{
+      	test: /\.js$/,
+      	exclude: /node_modules/,
+      	loader: 'babel-loader',
+    }
+&lt;/textarea&gt;
+&lt;/pre&gt;
+&lt;p&gt;详细解释此配置&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;1.&lt;code&gt;test: /\.js$/&lt;/code&gt;表明我只用babel-loader来加载js文件，如果你只是小部分js文件应用了ES6，那么也可以给这些文件换个&lt;code&gt;.es6&lt;/code&gt;的后缀名并把此处改为&lt;code&gt;test: /\.es6$/&lt;/code&gt;。&lt;/li&gt;
+	&lt;li&gt;2.&lt;code&gt;exclude: /node_modules/&lt;/code&gt;，不需要用babel来加载的文件还是剔除掉，否则会大量增加编译的时间，一般我们只用babel编译我们自己写的应用代码。&lt;/li&gt;
+	&lt;li&gt;3.&lt;code&gt;loader: 'babel-loader'&lt;/code&gt;，这一行是指定使用babel-loader并传入所需参数，这些参数其实也是可以通过babel配置文件.babelrc，不过我还是推荐在这里以参数的方式传入。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;配置webpack.config.js&lt;/h3&gt;
+&lt;pre&gt;
+&lt;textarea class=&quot;cm_textarea_script&quot;&gt;
+	 module.exports = {
+     entry: './src/app.js',
+     output: {
+         path: './bin',
+         filename: 'app.bundle.js',
+     },
+     module: {
+         loaders: [{
+             test: /\.js$/,
+             exclude: /node_modules/,
+             loader: 'babel-loader'
+         }]
+     }
+ }
+&lt;/textarea&gt;
+&lt;/pre&gt;
+&lt;h3&gt;示例代码&lt;/h3&gt;
+&lt;p&gt;我在github上有一demo，&lt;a href=&quot;https://github.com/Bamzc/vue_demo&quot;&gt;https://github.com/Bamzc/vue_demo&lt;/a&gt;&lt;/p&gt;</content><author><name>Zhaoce Bai</name><email>bamzc@hotmail.com</email></author><category term="webpack" /><category term="babel" /><category term="es6" /><summary type="html">前言
+一直以来，我对ES6都有很大的兴趣。随着ES6越来越火，webpack+babel，就跟es6深深的黏在了一起。通过初入es6，查阅教程、案例。也被es6的语法糖，甜的根本停不下来。然而每次配置，总得查阅文档（记性太差）。于是乎，记录一下在此。
+本文只介绍如何利用webpack整合Babel来编译ES6的语法，而实际上若要使用ES6的其它属性甚至是ES7（ES2016），其实只需要引入Babel其它的preset/plugin即可，在用法上并无多大变化。</summary></entry><entry><title type="html">gulp静态资源版本控制</title><link href="http://localhost:4000//2017/02/19/gulp-rev.html" rel="alternate" type="text/html" title="gulp静态资源版本控制" /><published>2017-02-19T04:20:21+08:00</published><updated>2017-02-19T04:20:21+08:00</updated><id>http://localhost:4000//2017/02/19/gulp-rev</id><content type="html" xml:base="http://localhost:4000//2017/02/19/gulp-rev.html">&lt;h4&gt;Gulp-用自动化构建工具增强你的工作流程&lt;/h4&gt;
 &lt;p&gt;
 	先说说gulp的优点，其实就是官网那一套，但是确实如此。
 
@@ -3470,119 +3522,4 @@ GitHub秘籍
 
 
 	
-	test</summary></entry><entry><title type="html">dom加载ready方法实现</title><link href="http://localhost:4000//2016/11/03/ready-document.html" rel="alternate" type="text/html" title="dom加载ready方法实现" /><published>2016-11-03T18:21:00+08:00</published><updated>2016-11-03T18:21:00+08:00</updated><id>http://localhost:4000//2016/11/03/ready-document</id><content type="html" xml:base="http://localhost:4000//2016/11/03/ready-document.html">&lt;pre&gt;
-&lt;textarea class=&quot;cm_textarea_script&quot;&gt;
-    
-var ready = (function(){
-
-    var DOMContentLoaded,_fn,isReady = false;
-
-    function doScrollCheck() {
-
-        try {
-            // 如果是IE低版本的话，可以使用 Diego Perini的这个技巧
-            // http://javascript.nwbox.com/IEContentLoaded/
-            document.documentElement.doScroll(&quot;left&quot;);
-        } catch(e) {
-            setTimeout( doScrollCheck, 1 );
-            return;
-        }
-
-        handle();
-    }
-    //firefox，chorme，safari，等等除基于IE内核以外的高级浏览器的添加事件方式
-    //DOM2的用法
-    if ( document.addEventListener ) {
-        DOMContentLoaded = function() {
-            document.removeEventListener( &quot;DOMContentLoaded&quot;, DOMContentLoaded, false );
-            handle();
-        };
-    //IE处理事件的方式
-    } else if ( document.attachEvent ) {
-        DOMContentLoaded = function() {
-            // 确保body存在，IE的处理方式
-            if ( document.readyState === &quot;complete&quot; ) {
-                document.detachEvent( &quot;onreadystatechange&quot;, DOMContentLoaded );
-                handle();
-            }
-        };
-    }
-    function handle(){
-        if ( isReady ) {
-            return;
-        }
-
-        _fn();
-
-        isReady = true;
-
-        _fn = null;
-    }
-    var loadRead = function(fn){
-
-        if(isReady){
-            fn.call(document);
-            return;
-        }
-
-        _fn = fn;
-
-        if ( document.readyState === &quot;complete&quot; ) {
-            return setTimeout( handle, 1 );
-        }
-        //IE9+，firefox，chorme，safari，opera添加事件方式
-        //DOM2级事件处理程序
-        if ( document.addEventListener ) {
-            document.addEventListener( &quot;DOMContentLoaded&quot;, DOMContentLoaded, false );
-            window.addEventListener( &quot;load&quot;, handle, false );
-        //IE事件处理程序
-        } else if ( document.attachEvent ) {
-            document.attachEvent( &quot;onreadystatechange&quot;, DOMContentLoaded );
-            window.attachEvent( &quot;onload&quot;, handle );
-            // 如果IE不支持onreadystatechange，可以使用以下方式触发
-            // 检测document是否ready
-            var toplevel = false;
-
-            try {
-                toplevel = window.frameElement == null;
-            } catch(e) {}
-
-            if ( document.documentElement.doScroll &amp;amp;&amp;amp; toplevel ) {
-                doScrollCheck();
-            }
-        }
-
-    };
-    return loadRead;
-})();
-
-ready(function(){
-    console.log('loaded')
-});
-
-&lt;/textarea&gt;
-&lt;/pre&gt;
-&lt;div&gt;
-&lt;h3&gt;DOM文档加载的步骤&lt;/h3&gt;
-&lt;ul&gt;
-    &lt;li&gt;(1) 解析HTML结构。&lt;/li&gt;
-    &lt;li&gt;(2) 加载外部脚本和样式表文件。&lt;/li&gt;
-    &lt;li&gt;(3) 解析并执行脚本代码。&lt;/li&gt;
-    &lt;li&gt;(4) 构造HTML DOM模型。//ready&lt;/li&gt;
-    &lt;li&gt;(5) 加载图片等外部文件。&lt;/li&gt;
-    &lt;li&gt;(6) 页面加载完毕。//load&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;由于该事件在文档就绪后发生，因此把所有其他的事件和函数置于该事件中是非常好的做法。由此可见，ready事件的执行顺序是要优于load事件的。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;load:&lt;/strong&gt;当页面完全加载在window上面后触发，当所有框架都加载完毕是在框架集上面触发，当图像加载完毕是在img元素上面触发，或者当嵌入的内容加载完毕时在Object元素上面触发。&lt;/p&gt;
-&lt;/div&gt;
-&lt;h3&gt;HTML DOM readyState 属性&lt;/h3&gt;
-&lt;div&gt;
-    &lt;p&gt;readyState 属性返回当前文档的状态（载入中……）。该属性返回以下值:&lt;/p&gt;
-    &lt;ul&gt;
-        &lt;li&gt;(1) uninitialized - 还未开始载入&lt;/li&gt;
-        &lt;li&gt;(2) loading - 载入中&lt;/li&gt;
-        &lt;li&gt;(3) interactive - 已加载，文档与用户可以开始交互&lt;/li&gt;
-        &lt;li&gt;(4) complete - 载入完成&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;div&gt;
-&lt;/div&gt;&lt;/div&gt;</content><author><name>Zhaoce Bai</name><email>bamzc@hotmail.com</email></author><category term="ready" /><category term="document" /><summary type="html">var ready = (function(){</summary></entry></feed>
+	test</summary></entry></feed>
