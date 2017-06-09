@@ -1,4 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="http://localhost:4000//feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000//feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000//" rel="alternate" type="text/html" /><updated>2017-06-06T15:28:17+08:00</updated><id>http://localhost:4000///</id><title type="html">白召策的博客</title><author><name>Zhaoce Bai</name><email>bamzc@hotmail.com</email></author><entry><title type="html">webpack+babel+es6整合</title><link href="http://localhost:4000//2017/06/06/webpack-babel-es6.html" rel="alternate" type="text/html" title="webpack+babel+es6整合" /><published>2017-06-06T02:20:21+08:00</published><updated>2017-06-06T02:20:21+08:00</updated><id>http://localhost:4000//2017/06/06/webpack-babel-es6</id><content type="html" xml:base="http://localhost:4000//2017/06/06/webpack-babel-es6.html">&lt;h3&gt;前言&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xml" href="http://localhost:4000//feed.xslt.xml"?><feed xmlns="http://www.w3.org/2005/Atom"><generator uri="http://jekyllrb.com" version="3.4.3">Jekyll</generator><link href="http://localhost:4000//feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000//" rel="alternate" type="text/html" /><updated>2017-06-09T14:07:47+08:00</updated><id>http://localhost:4000///</id><title type="html">白召策的博客</title><author><name>Zhaoce Bai</name><email>bamzc@hotmail.com</email></author><entry><title type="html">vue-route+webpack部署单页路由项目，访问刷新出现404问题</title><link href="http://localhost:4000//2017/06/09/vue-router+webpack-pit.html" rel="alternate" type="text/html" title="vue-route+webpack部署单页路由项目，访问刷新出现404问题" /><published>2017-06-09T02:20:21+08:00</published><updated>2017-06-09T02:20:21+08:00</updated><id>http://localhost:4000//2017/06/09/vue-router+webpack-pit</id><content type="html" xml:base="http://localhost:4000//2017/06/09/vue-router+webpack-pit.html">&lt;p&gt;使用Vue.js框架，利用vue-router结合webpack编写了一个单页路由项目，在服务器端配置nginx。部署完成后，访问首页没问题，从首页里打开二级页面没问题，但是所有的二级页面打开后，再次刷新，就会出现404现象。&lt;/p&gt;
+
+&lt;p&gt;如图:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/src/img/nginx-404.png&quot; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;div class=&quot;note-warning&quot;&gt;
+&lt;h4&gt;问题原因：&lt;/h4&gt;
+&lt;span class=&quot;warn-text&quot;&gt;刷新页面时访问的资源在服务端找不到，因为vue-router设置的路径不是真实存在的路径。&lt;/span&gt;
+&lt;/div&gt;
+&lt;/pre&gt;
+
+&lt;p&gt;二级页面，刷新页面，出现&lt;code&gt;404 Not Found&lt;/code&gt;，是因为在nginx配置的根目录E:/project/demo/dist下面压根没有list这个真实资源存在，这些访问资源都是在js里渲染的&lt;/p&gt;
+
+&lt;p&gt;服务端nginx的一开始配置如下（假设域名为：test.demo.com）：&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;textarea class=&quot;cm_textarea_script&quot;&gt;
+	server {
+         listen 80;
+         server_name test.demo.com;
+         root E:/project/demo/dist;
+         location / {
+            #root   html;
+            index  index.html index.htm;
+        }
+	}
+&lt;/textarea&gt;
+&lt;/pre&gt;
+&lt;p&gt;如上出现404的原因是由于在这个域名根目录E:/project/demo/dist下面压根就没有list这个真实目录存在。&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;div class=&quot;note-warning&quot;&gt;
+&lt;h4&gt;问题解决：&lt;/h4&gt;
+&lt;span class=&quot;warn-text&quot;&gt;在nginx配置里添加vue-route的跳转设置，正确配置如下&lt;/span&gt;
+&lt;/div&gt;
+&lt;/pre&gt;
+
+&lt;pre&gt;
+&lt;textarea class=&quot;cm_textarea_script&quot;&gt;
+	server {
+         listen 80;
+         server_name test.demo.com;
+         root E:/project/demo/dist;
+         location / {
+            try_files $uri $uri/ @router;
+            index index.html;
+        }
+
+        location @router {
+            rewrite ^.*$ /index.html last;
+        }
+	}
+	//配置解析
+	//例如你访问www.baidu.com/abc.html他最后会跳转到www.baidu.com/index.html/abc.html
+	/**
+	 * 由于vuejs，单页面应用程序，必须由index.html入口文件加载静态资源，加载程序
+	 * 所以，通过rewrite转发，先请求index.html加载资源，然后在跳转路由配置的二级页面
+	 */
+&lt;/textarea&gt;
+&lt;/pre&gt;</content><author><name>Zhaoce Bai</name><email>bamzc@hotmail.com</email></author><category term="nginx" /><category term="vue" /><summary type="html">使用Vue.js框架，利用vue-router结合webpack编写了一个单页路由项目，在服务器端配置nginx。部署完成后，访问首页没问题，从首页里打开二级页面没问题，但是所有的二级页面打开后，再次刷新，就会出现404现象。</summary></entry><entry><title type="html">webpack+babel+es6整合</title><link href="http://localhost:4000//2017/06/06/webpack-babel-es6.html" rel="alternate" type="text/html" title="webpack+babel+es6整合" /><published>2017-06-06T02:20:21+08:00</published><updated>2017-06-06T02:20:21+08:00</updated><id>http://localhost:4000//2017/06/06/webpack-babel-es6</id><content type="html" xml:base="http://localhost:4000//2017/06/06/webpack-babel-es6.html">&lt;h3&gt;前言&lt;/h3&gt;
 &lt;p&gt;一直以来，我对ES6都有很大的兴趣。随着ES6越来越火，webpack+babel，就跟es6深深的黏在了一起。通过初入es6，查阅教程、案例。也被es6的语法糖，甜的根本停不下来。然而每次配置，总得查阅文档（记性太差）。于是乎，记录一下在此。&lt;/p&gt;
 &lt;p&gt;本文只介绍如何利用webpack整合Babel来编译ES6的语法，而实际上若要使用ES6的其它属性甚至是ES7（ES2016），其实只需要引入Babel其它的preset/plugin即可，在用法上并无多大变化。&lt;/p&gt;
 
@@ -3379,147 +3439,4 @@ git的资料整理
 GitHub 漫游指南
 GitHub秘籍
 使用git和github进行协同开发流程
-动画方式练习git</summary></entry><entry><title type="html">对Storage和cookie的封装</title><link href="http://localhost:4000//2016/11/05/storage-cookie.html" rel="alternate" type="text/html" title="对Storage和cookie的封装" /><published>2016-11-05T01:21:00+08:00</published><updated>2016-11-05T01:21:00+08:00</updated><id>http://localhost:4000//2016/11/05/storage-cookie</id><content type="html" xml:base="http://localhost:4000//2016/11/05/storage-cookie.html">&lt;pre&gt;
-&lt;textarea class=&quot;cm_textarea&quot;&gt;
-&amp;lt;!doctype html&amp;gt;
-&lt;html&gt;
-&lt;head&gt;
-	&lt;meta charset=&quot;utf-8&quot; /&gt;
-	&lt;title&gt;test&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-	&lt;script type=&quot;text/javascript&quot;&gt;
-	var singleton = function( fn ){
-	    var result;
-	    return function(){
-	        return result || ( result = fn .apply( this, arguments ) );
-	    }
-	}
-	var _storage=singleton(function(){
-		var lstorage;
-		if(window.localStorage){
-			lstorage=localStorage;
-		}else{
-		    var UserData = {
-		    userData: null,
-		    name: location.hostname,
-
-		    init: function() {
-		        if(!UserData.userData) {
-		            try {
-		                UserData.userData = document.createElement('div');
-		                UserData.userData.type = &quot;hidden&quot;;
-		                UserData.userData.style.display = &quot;none&quot;;
-		                UserData.userData.addBehavior(&quot;#default#userData&quot;);
-		                document.body.appendChild(UserData.userData);
-		                var expires = new Date();
-		                expires.setDate(expires.getDate() + 365);
-		                UserData.userData.expires = expires.toUTCString();
-		            } catch(e) {
-		                return false;
-		            }
-		        }
-		        return true;
-		    },
-
-		    setItem: function(key, value) {
-		        if(UserData.init()) {
-		            UserData.userData.setAttribute(key,value);
-		        }
-		    },
-
-		    getItem: function(key) {
-		        if(UserData.init()) {
-		            var  v=UserData.userData.getAttribute(key);
-		            return v;
-		        }
-		    },
-		    removeItem: function(key) {
-		        if(UserData.init()) {
-		            UserData.userData.removeAttribute(key);
-		        }
-		    },
-		    //以下三个方法暂时留着,区别Attribute和property
-		    getAttr:function(el, prop){
-		    	return el[prop] || el.getAttribute(prop);
-		    },
-		    setAttr:function(el, prop, val){
-	    		el[prop] = val;
-		    },
-		    removeAttr:function(el, prop){
-		    	delete el[prop];
-		    }
-		};
-			lstorage=UserData;
-		};
-		var ls = {
-			setLocalStorage : function(k,v){
-				lstorage.setItem(k,v);
-			},
-			getLocalStorage : function(k){
-				return lstorage.getItem(k);
-			},
-			removeLocalStorage:function(k){
-				lstorage.removeItem(k);
-			},
-			clearLocalStorage : function(){
-				lstorage.clear();
-			}
-		};
-		return ls;
-	})();
-
-	var _cookie=singleton(function(){
-		var ck={
-			addCookie:function(obj){
-				if(typeof(obj)===&quot;undefined&quot;){
-					return;
-				}
-				for(var c in obj){
-					var strCookie=c+&quot;=&quot;+obj[c]+&quot;;&quot;
-					// cookieString+=strCookie;
-					document.cookie=strCookie;
-				}
-				// alert(document.cookie)
-			},
-			getCookie : function(name){
-				var strCookie=document.cookie; 
-				var arrCookie=strCookie.split(&quot;; &quot;); 
-				for(var i=0;i&lt;arrCookie.length;i++){ 
-					var arr=arrCookie[i].split(&quot;=&quot;); 
-					if(arr[0]==name){
-						return arr[1];
-					}; 
-				} 
-				return &quot;&quot;; 
-
-			},
-			deleteCookie : function(name){
-				var date=new Date(); 
-				date.setTime(date.getTime()-10000); 
-				document.cookie=name+&quot;=v; expires=&quot;+date.toGMTString();
-			}
-		};
-		return ck;
-	})();
-	//需要存储的数据
-	var storageJson={
-		&quot;name&quot;:&quot;bamzc&quot;,
-		&quot;age&quot;:&quot;23&quot;,
-		&quot;sex&quot;:&quot;男&quot;
-	};
-	_storage.setLocalStorage(&quot;name&quot;,storageJson.name);
-	// _storage.removeLocalStorage(&quot;name&quot;);
-	document.write(&quot;我给localStorage赋值：&quot;+_storage.getLocalStorage(&quot;name&quot;));
-    _cookie.addCookie(storageJson);
-    // _cookie.deleteCookie(&quot;age&quot;);
-    document.write(&quot;&lt;br&gt;&lt;br&gt;我添加了一个cookie：&quot;+_cookie.getCookie(&quot;age&quot;));
-	&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-&lt;/textarea&gt;
-&lt;/pre&gt;</content><author><name>Zhaoce Bai</name><email>bamzc@hotmail.com</email></author><category term="storage" /><category term="cookie" /><summary type="html">&amp;lt;!doctype html&amp;gt;
-
-
-	
-	test</summary></entry></feed>
+动画方式练习git</summary></entry></feed>
