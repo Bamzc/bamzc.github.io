@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>前端面试之JavaScript篇</title>
+    <title>学习总结</title>
     
     
     <meta name="author" content="Zhaoce Bai">
@@ -15,10 +15,6 @@
     <link href="/assets/src/css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
     <!-- single page styles -->
-    
-        
-            <link href="/assets/css/study_relevant.css" rel="stylesheet" type="text/css">
-        
     
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
@@ -223,74 +219,54 @@
 
 <div class="page-header">
   <h1>
-     <small>前端面试之JavaScript篇</small>
-    
+     <small>分类列表：学习总结</small>
+     <p>天才，就其本质而说，只不过是一种对事业、对工作过盛的热爱而已。</p>
   </h1>
 </div>
-
 <div class="content-center">
-    <div class="row">
-        <div class="col-md-12 post-container post-container-category">
-            <h4>1.	如何判断Array，Object，Function？</h4>
-<pre>
-<textarea class="cm_textarea_script">
-function isAOF(o) {
-    return Object.prototype.toString.call(o).slice(8,-1);
-}
-var a = [],b = {},c = function(){};
-console.log(isAOF(a));//Array
-console.log(isAOF(b));//Object
-console.log(isAOF(c));//Function
-</textarea>
-</pre>
-<h4>2.	如何实现bind方法？</h4>
-<pre>
-<textarea class="cm_textarea_script">
-Function.prototype.bind = Function.prototype.bind || function(context){
-   var self = this;
- 
-   return function(){
-      return self.apply(context, arguments);
-   };
-}
-</textarea>
-</pre>
-<h4>3.	实现一个函数clone，可以对JavaScript中的5种主要的数据类型（包括Number、String、Object、Array、Boolean）进行值复制</h4>
-<pre>
-<textarea class="cm_textarea_script">
-//方法一：
-var obj = {a:1,b:2}
 
-var a = 1;
 
-Object.prototype.clone = function(){
-  var o = this instanceof Array ? [] : {};
-  for(var i in this){
-    o[i] = typeof this[i]==="object" ? this[i].clone() : this[i];
-  }
-  return o;
-}
 
-var s = obj.clone();
+    
+          <div class="row">
+            <div class="col-md-12 post-container post-container-row">
+            <h2 class="post-title">
+            <a rel="bookmark" href="/2018/03/20/summary">迟来的2017年总结</a>
+            </h2>
+          <div class="meta-box">
+          <span class="m-post-date">
+          <i class="fa fa-calendar-o"></i>2018年03月20日</span>
+          <span class="comments-link">
+            <a title="Comment on 迟来的2017年总结" data-thread-key="/2018/03/20/summary" class="ds-thread-count" href="/2018/03/20/summary#comments" target="_self">
+            <!-- <i class="fa fa-comments-o">0</i> 条评论 --></a>
+          </span>
+          </div>
+          <div class="post-content post-expect">
+            <p>比较尴尬的一年，工作经历曲折不堪。今年相比去年，在前端方面再次加大了学习力度。一批一批的人才涌入，技术栈不断更新，致使前端的学习曲线再次扩大。
+          <a class="more-link btn btn-primary btn-xs" href="/2018/03/20/summary">阅读全文</a>
+          </p>
+          </div>
+          <div class="meta-box">
+          <span class="cat-links"><i class="fa fa-navicon"></i><b>分类:</b>
+          
+            <a rel="category tag" href="javascript:;" >总结</a>
+          
+            <a rel="category tag" href="javascript:;" >感悟</a>
+           
+          </span>
+          <span class="tag-links"><i class="fa fa-tags"></i><b>标签:</b>
+          
+              <a rel="tag" href="javascript:;" target="_self">2017</a>
+          
+              <a rel="tag" href="javascript:;" target="_self">总结</a>
+          
+          </span>
+          </div>
+          </div>
+          </div>
+    
 
-console.log(s)//{a:1,b:2}
-</textarea>
-</pre>
-
-        </div>
-        <!--评论系统-->
-        <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
-    </div>
 </div>
-<script>
-  var cloudTieConfig = {
-    url: document.location.href, 
-    sourceId: "",
-    productKey: "6bf7727383c54f13be32e914b61fe177",
-    target: "cloud-tie-wrapper"
-  };
-</script>
-<script src="https://img1.cache.netease.com/f2e/tie/yun/sdk/loader.js"></script>
 
 
     </div>
