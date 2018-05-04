@@ -12,12 +12,21 @@
     <!-- Enable responsive viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Custom styles -->
-    <link href="/assets/src/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/src/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        document.write('<script src="/dist/a.js?v='+Math.random()+'"><\/script>')
+    </script>
+    <script type="text/javascript">
+
+        __loadCss('style')
+    </script>
     <!-- single page styles -->
     
         
-            <link href="/assets/css/study_relevant.css" rel="stylesheet" type="text/css">
+            <script type="text/javascript">
+
+        __loadCss('study_relevant')
+    </script>
         
     
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -242,7 +251,7 @@
             <p>使用Vue.js框架，利用vue-router结合webpack编写了一个单页路由项目，在服务器端配置nginx。部署完成后，访问首页没问题，从首页里打开二级页面没问题，但是所有的二级页面打开后，再次刷新，就会出现404现象。</p>
 
 <p>如图:</p>
-<p><img src="/assets/src/img/nginx-404.png" /></p>
+<p><img src="/src/assets/img/nginx-404.png" /></p>
 
 <pre>
 <div class="note-warning">
@@ -330,10 +339,15 @@
 
 
 
-    <script src="/assets/js/common.js"></script>
+    <script type="text/javascript">
+            __loadJs('manifest');
+            __loadJs('vendor');
+        </script>
     
         
-            <script src="/assets/js/study_relevant.js"></script>
+            <script type="text/javascript">
+                __loadJs('study_relevant')
+            </script>
         
     
   </body>

@@ -12,12 +12,21 @@
     <!-- Enable responsive viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Custom styles -->
-    <link href="/assets/src/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="/assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/src/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript">
+        document.write('<script src="/dist/a.js?v='+Math.random()+'"><\/script>')
+    </script>
+    <script type="text/javascript">
+
+        __loadCss('style')
+    </script>
     <!-- single page styles -->
     
         
-            <link href="/assets/css/study_relevant.css" rel="stylesheet" type="text/css">
+            <script type="text/javascript">
+
+        __loadCss('study_relevant')
+    </script>
         
     
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
@@ -241,7 +250,7 @@
         <div class="col-md-12 post-container post-container-category">
             <h3>1. 什么是Repaint/Reflow?</h3>
 <p>先来一张图：浏览器解析大概的工作流程</p>
-<pre><img src="/assets/src/img/repaint_reflow.png" alt="浏览器解析大概的工作流程" /></pre>
+<pre><img src="/src/assets/img/repaint_reflow.png" alt="浏览器解析大概的工作流程" /></pre>
 <p>这张图应该可以很好理解，归纳为四个步骤：</p>
 <ul>
 <li>1、解析HTML以构建DOM树：渲染引擎开始解析HTML文档，转换树中的html标签或js生成的标签到DOM节点，它被称为 -- 内容树。</li>
@@ -278,10 +287,15 @@
 
 
 
-    <script src="/assets/js/common.js"></script>
+    <script type="text/javascript">
+            __loadJs('manifest');
+            __loadJs('vendor');
+        </script>
     
         
-            <script src="/assets/js/study_relevant.js"></script>
+            <script type="text/javascript">
+                __loadJs('study_relevant')
+            </script>
         
     
   </body>
