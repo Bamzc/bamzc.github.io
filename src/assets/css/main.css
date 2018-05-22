@@ -852,6 +852,7 @@ a:hover {
 
 .pic-info-animation .pic-info-fade .read-more {
     text-align: center;
+    color: #fff;
     padding-top: 10px;
 }
 
@@ -893,6 +894,7 @@ a:hover {
 
 .pic-info-animation .pic-info-fade .read-more .btn:hover {
     background: #4f8db3;
+    color: #fff;
 }
 
 .pic-info-animation .pic-info-fade ul li:first-child {
