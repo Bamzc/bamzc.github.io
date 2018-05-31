@@ -1204,7 +1204,7 @@ ul {
 
 .post-container li {
     line-height: 2em;
-    margin-left: 30px;
+    /*margin-left: 30px;*/
 }
 
 .row .post-container-category {
@@ -1592,7 +1592,7 @@ b {
     }
 }
 .content-center h1,h2,h3,h4,h5{
-    text-indent:1.5em;
+    /*text-indent:1.5em;*/
 }
 
 .content-center .left-column {

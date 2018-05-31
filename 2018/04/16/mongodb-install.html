@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>记录</title>
+    <title>mongoDB安装</title>
     
     
     <meta name="author" content="Zhaoce Bai">
@@ -74,8 +74,6 @@
     
   
     
-  
-    
       
     
   
@@ -91,6 +89,12 @@
   
     
       
+    
+  
+    
+      
+    
+  
     
   
     
@@ -240,7 +244,7 @@
 
 <div class="page-header">
   <h1>
-     <small>记录</small>
+     <small>mongoDB安装</small>
     
   </h1>
 </div>
@@ -248,40 +252,76 @@
 <div class="content-center">
     <div class="row">
         <div class="col-md-12 post-container post-container-category">
-            <p>1.vue-router 的 hash 模式与 history 模式
-2.双向数据绑定的实现原理
-3.组件间传值的原理
-4.webpack的配置  webpack原理
-5.vuex实现原理
-6.px2rem原理
-7.weex的原理，源码的研究
-8.数组取交集
-9.Object.assign()用法
-10.promise的用法
-11.箭头函数相关的东西
-12.es6的模块与nodejs的模块有何异同
-13.http相关知识 如：状态码  有哪些属性 403,301，302,307,500
-14.随机数相关的东西
-15.用var 声明变量 ，点不同的dom结点，输出不同的值
-16.proxy 相关的内容
-17.js图片并行加载
-18.如果写一个commonjs那样的框架 说说思路
-19.用prototype写个继承</p>
-<ol>
-  <li>hybrid的原理
-21.用没用过bind
-22.rem 怎么算出来的
-23.promise实现原理
-24.手写观察者模式
-25.写一个递归程序
-26.写一个数组去重</li>
-</ol>
+            <h2>MongoDB下载</h2>
+<p>MongoDB 提供了可用于 32 位和 64 位系统的预编译二进制包，你可以从MongoDB官网下载安装，MongoDB 预编译二进制包下载地址：https://www.mongodb.com/download-center#community</p>
+<p>上述方式我试了比较费劲，推荐这个地址<a class="" href="http://dl.mongodb.org/dl/win32/x86_64">http://dl.mongodb.org/dl/win32/x86_64</a></p>
+<h2>MongoDB安装完后，添加环境变量</h2>
+<p>这个不做介绍，不懂的自行百度！</p>
+<h2>将其注册成windows服务，方式有两种</h2>
+<h3>方式一：</h3>
+<p>通过命令行参数</p>
+<textarea class="cm_textarea_script">
+//cmd 命令提示符下输入
+mongod --dbpath "c:\bamzc\mongodb_data\db" --logpath "c:\bamzc\mongodb_data\log\mongodb.log"  --install --serviceName "MongoDB"
+</textarea>
+<p>此时出现问题：</p>
+<textarea class="cm_textarea_script">
+//运行完以后，执行命令
+net start MonogoDB
 
-<p>上濒
-1.script async 异步阻塞
-2.Generator
-3.svg与canvas区别
-4.es6继承</p>
+//于是乎，出现问题！！查阅无数文档，无不是提议使用管理员权限打开cmd，再次输入命令执行！
+//然后，还是出现问题！问题还是下面这个
+服务名无效。
+请键入 NET HELPMSG 2185 以获得更多的帮助。
+
+//查看mongodb.log日志，出现以下错误
+2018-05-31T17:16:50.416+0800 I CONTROL  [main] Trying to install Windows service 'MongoDBService'
+2018-05-31T17:16:50.417+0800 I CONTROL  [main] Error connecting to the Service Control Manager: 拒绝访问。 (5)
+
+//问题浮出水面，直接管理员权限打开cmd，再次输入以下命令
+mongod --dbpath "c:\bamzc\mongodb_data\db" --logpath "c:\bamzc\mongodb_data\log\mongodb.log"  --install --serviceName "MongoDBService"
+
+//输入命令,ok成功！
+net start MongoDBService
+MongoDB 服务正在启动 ..
+MongoDB 服务已经启动成功。
+</textarea>
+<h3>方式二：</h3>
+<p>通过配置文件</p>
+<textarea class="cm_textarea_script">
+//cmd 命令提示符下输入
+mongod --install -f "c:\Program Files\MongoDB\Server\3.4\mongod.conf"
+</textarea>
+<p>mongod.conf内容如下：</p>
+<textarea class="cm_textarea_script">
+logpath = c:\bamzc\mongodb_data\log\mongodb.log
+dbpath = c:\bamzc\mongodb_data\db
+logappend = true
+directoryperdb = true
+serviceName = MongoDBService
+serviceDisplayName = MongoDBService1
+port = 27017
+</textarea>
+<p>命令执行后命令行没有任何输出直接结束了，但是启动服务时调用net start MongoDBService 还是出现方式一的错误！</p>
+
+<p>查看日志文件mongodb.log，发现如下记录：</p>
+<textarea class="cm_textarea_script">
+//查看mongodb.log日志，出现以下错误
+2018-05-31T17:16:50.416+0800 I CONTROL  [main] Trying to install Windows service 'MongoDBService'
+2018-05-31T17:16:50.417+0800 I CONTROL  [main] Error connecting to the Service Control Manager: 拒绝访问。 (5)	
+
+//于是！解决方案如方式一
+//直接管理员权限打开cmd，再次输入以下命令
+mongod --install -f "c:\Program Files\MongoDB\Server\3.4\mongod.conf"
+
+//再次输入命令,ok成功！
+net start MongoDBService
+MongoDB 服务正在启动 ..
+MongoDB 服务已经启动成功。
+</textarea>
+<p>这个真是费死劲，查阅很多教程，还是出现错误。有可能是我的电脑问题吧。记录一下！这个坑浪费了我很多时间，我希望我这篇文章能带给大家帮助吧。</p>
+
+<p>最后！欢迎大家加入QQ群81148810，一起交流分享技术</p>
 
         </div>
         <!--评论系统-->
