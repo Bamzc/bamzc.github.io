@@ -4,6 +4,8 @@ GEM
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
     colorator (1.1.0)
+    concurrent-ruby (1.1.10)
+    ffi (1.9.14)
     ffi (1.9.14-x86-mingw32)
     forwardable-extended (2.6.0)
     jekyll (3.4.3)
@@ -40,13 +42,13 @@ GEM
     rouge (1.11.1)
     safe_yaml (1.0.4)
     sass (3.4.22)
-    thread_safe (0.3.6)
-    tzinfo (1.2.3)
-      thread_safe (~> 0.1)
+    tzinfo (2.0.5)
+      concurrent-ruby (~> 1.0)
     tzinfo-data (1.2017.2)
       tzinfo (>= 1.0.0)
 
 PLATFORMS
+  ruby
   x86-mingw32
 
 DEPENDENCIES
